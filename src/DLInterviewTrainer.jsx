@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import questions from "./questions.json";
 
-// Card and CardContent replacement
+// Card replacement
 function Card({ children, className = "" }) {
   return (
-    <div className={`bg-white shadow-md rounded-lg border border-gray-200 p-4 ${className}`}>
+    <div className={`bg-white shadow-md rounded-lg border border-gray-200 p-4 dark:bg-gray-800 dark:border-gray-700 ${className}`}>
       {children}
     </div>
   );
@@ -16,7 +16,7 @@ function Button({ children, onClick, className = "", type = "button" }) {
     <button
       type={type}
       onClick={onClick}
-      className={`px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 ${className}`}
+      className={`px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50 ${className}`}
     >
       {children}
     </button>
@@ -30,7 +30,7 @@ function Textarea({ value, onChange, placeholder = "", className = "" }) {
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className={`w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none ${className}`}
+      className={`w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none dark:bg-gray-700 dark:text-white dark:border-gray-600 ${className}`}
       rows={4}
     />
   );
@@ -39,14 +39,11 @@ function Textarea({ value, onChange, placeholder = "", className = "" }) {
 // Badge replacement
 function Badge({ children, className = "" }) {
   return (
-    <span
-      className={`inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded ${className}`}
-    >
+    <span className={`inline-block px-3 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded dark:bg-blue-900 dark:text-blue-200 ${className}`}>
       {children}
     </span>
   );
 }
-
 
 export default function DLInterviewTrainer() {
   const [answered, setAnswered] = useState(() => {
@@ -86,9 +83,9 @@ export default function DLInterviewTrainer() {
   const progress = Math.round((Object.keys(answered).length / questions.length) * 100);
 
   return (
-    <div className={`p-6 max-w-4xl mx-auto space-y-6 ${darkMode ? 'dark bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <div className={`p-6 max-w-4xl mx-auto space-y-6 min-h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
       <div className="flex justify-between items-center flex-wrap gap-4">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <p className="text-sm">
             Progress: {Object.keys(answered).length} / {questions.length} ({progress}%)
           </p>
@@ -124,35 +121,37 @@ export default function DLInterviewTrainer() {
           ))}
         </select>
       </div>
-      <Card className="shadow-lg border border-gray-200 dark:border-gray-700">
-        <CardContent className="p-6 space-y-4">
+
+      <Card>
+        <div className="space-y-4">
           <div className="flex justify-between items-start">
             <h2 className="text-2xl font-bold">{question.id}</h2>
-            <Badge variant="outline" className="text-sm font-medium px-3 py-1">{question.chapter || "Unknown Topic"}</Badge>
+            <Badge>{question.chapter || "Unknown Topic"}</Badge>
           </div>
+
           <p className="text-lg leading-relaxed whitespace-pre-wrap">{question.question}</p>
+
           <Textarea
             placeholder="Write your answer here..."
-            className="min-h-[120px] border-gray-300 shadow-sm dark:bg-gray-800 dark:text-white"
+            className="min-h-[120px]"
           />
+
           <div className="flex gap-4 mt-2">
-            <Button onClick={handleMark} variant="secondary">
+            <Button onClick={handleMark}>
               {isAnswered ? "View Again" : "Show Solution"}
             </Button>
-            <Button onClick={handleNext} className="bg-blue-600 text-white hover:bg-blue-700">
+            <Button onClick={handleNext}>
               Next Question
             </Button>
           </div>
+
           {isAnswered && (
             <div className="bg-green-100 dark:bg-green-900 p-4 rounded-lg mt-4 border border-green-300 dark:border-green-600">
               <p className="font-semibold">Solution:</p>
               <p className="whitespace-pre-wrap text-sm">{question.solution}</p>
             </div>
           )}
-          {isAnswered && !showSolution && (
-            <p className="text-xs text-right text-gray-400 italic mt-2">You answered this before</p>
-          )}
-        </CardContent>
+        </div>
       </Card>
     </div>
   );
