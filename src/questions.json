@@ -1,0 +1,14 @@
+[
+  {
+    "id": "PRB-1",
+    "chapter": "Logistic Regression",
+    "question": "What is the sigmoid function?",
+    "solution": "The sigmoid function is \u03c3(x) = 1 / (1 + e^(-x))."
+  },
+  {
+    "id": "PRB-2",
+    "chapter": "Neural Networks",
+    "question": "What is backpropagation?",
+    "solution": "Backpropagation is a method used to compute gradients during training."
+  }
+]
