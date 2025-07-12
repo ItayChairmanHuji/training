@@ -109,7 +109,7 @@ export default function DLInterviewTrainer() {
           {isAnswered && !showSolution && (
             <p className="text-xs text-right text-gray-400 italic mt-2">You answered this before</p>
           )}
-        </CardContent>
+        </CardContent> 
       </Card>
     </div>
   );
