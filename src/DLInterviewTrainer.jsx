@@ -1,9 +1,52 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import questions from "./questions.json";
+
+// Card and CardContent replacement
+function Card({ children, className = "" }) {
+  return (
+    <div className={`bg-white shadow-md rounded-lg border border-gray-200 p-4 ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+// Button replacement
+function Button({ children, onClick, className = "", type = "button" }) {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      className={`px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 ${className}`}
+    >
+      {children}
+    </button>
+  );
+}
+
+// Textarea replacement
+function Textarea({ value, onChange, placeholder = "", className = "" }) {
+  return (
+    <textarea
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className={`w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none ${className}`}
+      rows={4}
+    />
+  );
+}
+
+// Badge replacement
+function Badge({ children, className = "" }) {
+  return (
+    <span
+      className={`inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded ${className}`}
+    >
+      {children}
+    </span>
+  );
+}
+
 
 export default function DLInterviewTrainer() {
   const [answered, setAnswered] = useState(() => {
